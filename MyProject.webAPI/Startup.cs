@@ -40,8 +40,6 @@ namespace MyProject.webAPI
 
                                   });
             });
-
-           
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MyProject.webAPI", Version = "v1" });
