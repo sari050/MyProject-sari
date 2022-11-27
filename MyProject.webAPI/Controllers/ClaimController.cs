@@ -17,21 +17,22 @@ namespace MyProject.webAPI.Controllers
     public class ClaimController : ControllerBase
     {
         private readonly IClaimRepository _claimRepository;
-   
+
 
         public ClaimController(IClaimRepository claimRepository)
         {
             _claimRepository = claimRepository;
         }
         [HttpGet]
-        public List<Claim> Get()
+        public async Task<List<Claim>> Get()
         {
-            return _claimRepository.GetAll();
+            return await _claimRepository.GetAllAsync();
         }
         [HttpGet("{id}")]
-        public Claim Get(int id)
+        public async Task<Claim> Get(int id)
         {
-            return _claimRepository.GetById(id);
+            return await _claimRepository.GetByIdAsync(id);
         }
+
     }
 }

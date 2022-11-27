@@ -22,30 +22,30 @@ namespace MyProject.Services.Services
             _mapper = mapper;
         }
 
-        public PermissionDTO Add(int id, string name, string description)
+        public async Task<PermissionDTO> AddAsync(int id, string name, string description)
         {
-            return _mapper.Map< PermissionDTO > (_permissionRepository.Add(id,name,description));
+            return _mapper.Map<PermissionDTO>(await _permissionRepository.AddAsync(id, name, description));
         }
 
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            _permissionRepository.Delete(id);
+            await _permissionRepository.DeleteAsync(id);
         }
 
-        public List<PermissionDTO> GetAll()
+        public async Task<List<PermissionDTO>> GetAllAsync()
         {
-            return _mapper.Map<List<PermissionDTO>>(_permissionRepository.GetAll());
+            return _mapper.Map<List<PermissionDTO>>(await _permissionRepository.GetAllAsync());
         }
 
-        public PermissionDTO GetById(int id)
+        public async Task<PermissionDTO> GetByIdAsync(int id)
         {
-            return _mapper.Map<PermissionDTO>(_permissionRepository.GetById(id));
+            return _mapper.Map<PermissionDTO>(await _permissionRepository.GetByIdAsync(id));
         }
 
-        public PermissionDTO Update(PermissionDTO Permission)
+        public async Task<PermissionDTO> UpdateAsync(PermissionDTO Permission)
         {
-            return _mapper.Map<PermissionDTO>(_permissionRepository.Update(_mapper.Map < Permission > (Permission)));
-        }      
+            return _mapper.Map<PermissionDTO>(await _permissionRepository.UpdateAsync(_mapper.Map<Permission>(Permission)));
+        }
     }
 }
 

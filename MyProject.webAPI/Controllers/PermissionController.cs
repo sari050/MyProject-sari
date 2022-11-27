@@ -22,14 +22,14 @@ namespace MyProject.webAPI.Controllers
             _permissionRepository = permissionRepository;
         }
         [HttpGet]
-        public List<Permission> Get()
+        public async Task<List<Permission>> Get()
         {
-            return _permissionRepository.GetAll();
+            return await _permissionRepository.GetAllAsync();
         }
         [HttpGet("{id}")]
-        public Permission Get(int id)
+        public async Task<Permission> Get(int id)
         {
-            return _permissionRepository.GetById(id);
+            return await _permissionRepository.GetByIdAsync(id);
         }
     }
 }

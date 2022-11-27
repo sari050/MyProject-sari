@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MyProject.Mock;
-using MyProject.Repositories.Entities;
+using MyPeoject.Common;
 using MyProject.Repositories.Interfaces;
 using MyProject.Repositories.Repositories;
+using MyProject.Services.Interfaces;
+using MyProject.webAPI.Modes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,32 +16,56 @@ namespace MyProject.webAPI.Controllers
     [ApiController]
     public class RoleController : ControllerBase
     {
-        private readonly IRoleRepository _roleRepository;
-        public RoleController(IRoleRepository roleRepository)
+        private readonly IRoleService _roleService;
+        public RoleController(IRoleService roleService)
         {
-
-            _roleRepository = roleRepository;
+            _roleService = roleService;
         }
         [HttpGet]
-        public List<Role> Get()
+        public async Task<List<RoleDTO>> Get()
         {
-            return _roleRepository.GetAll();
+            return await _roleService.GetAllAsync();
         }
         [HttpGet("{id}")]
-        public Role Get(int id)
+        public async Task<RoleDTO> Get(int id)
         {
-            return _roleRepository.GetById(id);
+            return await _roleService.GetByIdAsync(id);
         }
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _roleRepository.Delete(id);
+            await _roleService.DeleteAsync(id);
         }
         [HttpPut("{id},{name},{d}")]
-        public Role Put(int id,string name,string d)
+        public async Task<RoleDTO> Put(int id, string name, string d)
         {
-            Role r = new Role() { Id = id, Name = name, Description = d };
-            return _roleRepository.Update(r);
+            var r = _roleService.UpdateAsync(new RoleDTO { Id = id, Name = name, Description = d });
+            return r.Result;
         }
+        [HttpPost]
+        public async Task<RoleDTO> Post([FromBody] RoleModel model)
+        {
+            //var roleTask1 = _roleService.AddAsync(new RoleDTO());
+            //var roleTask2 = _roleService.AddAsync(new RoleDTO());
+            //var roleTask3 = _roleService.AddAsync(new RoleDTO());
+
+            //await Task.WhenAll(roleTask1, roleTask2);
+            //var x = await roleTask3;
+            //return roleTask1.Result;
+
+        }
+
+        //     [HttpPost]
+        //public async Task<RoleDTO> Post([FromBody] RoleModel model)
+        //{
+        //    var roleTask1 = _roleService.AddAsync(new RoleDTO());
+        //    var roleTask2 = _roleService.AddAsync(new RoleDTO());
+        //    var roleTask3 = _roleService.AddAsync(new RoleDTO());
+
+        //    await Task.WhenAll(roleTask1, roleTask2);
+        //    var x = await roleTask3;
+        //    return roleTask1.Result;
+        //}
+
     }
 }

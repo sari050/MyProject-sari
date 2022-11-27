@@ -8,18 +8,18 @@ using static MyPeoject.Common.ClaimDTO;
 
 namespace MyProject.Services.Interfaces
 {
-   
-        public interface IClaimeService
-        {
-            List<ClaimDTO> GetAll();
 
-            ClaimDTO GetById(int id);
+    public interface IClaimeService
+    {
+        Task<List<ClaimDTO>> GetAllAsync();
 
-            ClaimDTO Add(int id, int roleId, int permissionId, EPolicyDTO ePolicy);
+        Task<ClaimDTO> GetByIdAsync(int id);
 
-            ClaimDTO Update(ClaimDTO claim);
+        Task<ClaimDTO> AddAsync(int id, int roleId, int permissionId, EPolicyDTO ePolicy);
 
-            void Delete(int id);
-        }
-    
+        Task<ClaimDTO> UpdateAsync(ClaimDTO claim);
+
+        Task DeleteAsync(int id);
+    }
+
 }

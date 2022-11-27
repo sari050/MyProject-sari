@@ -11,46 +11,46 @@ using System.Threading.Tasks;
 
 namespace MyProject.Services.Services
 {
-   public class RoleService: IRoleService
+    public class RoleService : IRoleService
     {
 
         private readonly IRoleRepository _roleRepository;
         private readonly IMapper _mapper;
 
 
-        public RoleService(IRoleRepository context,IMapper mapper)
-            {
+        public RoleService(IRoleRepository context, IMapper mapper)
+        {
             _roleRepository = context;
-            _mapper=mapper;
-            }
-
-        public RoleDTO Add(int id, string name, string description)
-        {
-            return _mapper.Map<RoleDTO>(_roleRepository.Add(id, name, description));
+            _mapper = mapper;
         }
 
-        public void Delete(int id)
+        public async Task<RoleDTO> AddAsync(int id, string name, string description)
         {
-            _roleRepository.Delete(id);
+            return _mapper.Map<RoleDTO>(await _roleRepository.AddAsync(id, name, description));
         }
 
-        public List<RoleDTO> GetAll()
+        public async Task DeleteAsync(int id)
         {
-            return _mapper.Map<List<RoleDTO>>(_roleRepository.GetAll());
-
+            await _roleRepository.DeleteAsync(id);
         }
 
-        public RoleDTO GetById(int id)
+        public async Task<List<RoleDTO>> GetAllAsync()
         {
-            return _mapper.Map<RoleDTO>(_roleRepository.GetById(id));
+            return _mapper.Map<List<RoleDTO>>(await _roleRepository.GetAllAsync());
 
         }
 
-        public RoleDTO Update(RoleDTO role)
+        public async Task<RoleDTO> GetByIdAsync(int id)
         {
-            return _mapper.Map<RoleDTO>(_roleRepository.Update(_mapper.Map<Role>(role)));
+            return _mapper.Map<RoleDTO>(await _roleRepository.GetByIdAsync(id));
+
+        }
+
+        public async Task<RoleDTO> UpdateAsync(RoleDTO role)
+        {
+            return _mapper.Map<RoleDTO>(await _roleRepository.UpdateAsync(_mapper.Map<Role>(role)));
 
         }
     }
-    }
+}
 
